@@ -12,8 +12,8 @@ git clone https://github.com/ACALJJ32/colorization.git
 
 Download pretrained models in root folder and unzip.
 ```
-Baidu Disk: https://pan.baidu.com/s/13HWtkyIQ-3h-bIgzugivIQ
-code: no0v
+Baidu Disk: https://pan.baidu.com/s/1hKF8UxiVq3P92qOoDkFQvA
+code: 4vyd
 ```
 
 
