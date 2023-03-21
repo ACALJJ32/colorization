@@ -1,0 +1,76 @@
+seed: 224
+distributed: True
+train_visualization_iter: 5000
+
+datasets:
+  train:
+    name: NTIRE2023
+    type: Film_dataset_9
+    dataroot_gt: todo/gt
+    dataroot_lq: todo/gray
+
+    is_train: true
+    num_frame: 5
+    gt_size: [256,256]
+    scale: 1
+    interval_list: [1,2]
+    random_reverse: false
+    use_flip: false
+    use_rot: false
+
+    # data loader
+    use_shuffle: true
+    num_worker_per_gpu: 12
+    batch_size_per_gpu: 1
+    normalizing: true
+  
+  val:
+    name: NTIRE2023_validation
+    type: Film_dataset_10
+    dataroot_gt: /data1/ljj/NTIRE2023/Colorization/DATA/val_gt
+    dataroot_lq: /data1/ljj/NTIRE2023/Colorization/DATA/val_frames/val
+    num_frame: 8
+    gt_size: [256,256]
+    scale: 1
+    interval_list: [1]
+    normalizing: true
+
+path:
+  pretrain_network_g: pretrained_models/rnnrestormer_v3_extra_data/net_G_10000.pth
+  strict_load_g: true
+
+  pretrain_network_d: pretrained_models/rnnrestormer_v3_extra_data/net_D_10000.pth
+  strict_load_d: true
+  resume_state: ~
+
+trainer:
+  lr: 0.0001
+  flow_lr_mul: 0.125
+  gan_lr: 0.0001
+  beta1: 0.9
+  beta2: 0.99
+
+  G_adv_loss_weight: 0.01
+  D_adv_loss_weight: 1.0
+  pix_loss_weight: 1.0
+  perceptual_loss_weight: 1.0
+
+  nepoch_steady: 10
+  nepoch_decay: 10
+
+logger:
+  print_freq: 100
+  save_checkpoint_freq: !!float 5e3
+  use_tb_logger: false
+
+val:
+  val_freq: !!float 1e9
+  val_frame_num: 6
+  save_img: true
+
+  metrics:
+    psnr: # metric name, can be arbitrary
+      type: calculate_psnr
+
+    ssim:
+      type: calculate_ssim

@@ -18,10 +18,10 @@ from torchvision.utils import save_image
 import time
 import seaborn as sns
 
+
 def Get_RAFT():
     opts = argparse.Namespace()
-    opts.model = "pretrained_models/raft-sintel.pth"
-    # opts.model = "/home/wanziyu/workspace/project/Video_Restoration/pretrained_models/raft-sintel.pth"
+    opts.model = "weight/raft-sintel.pth"
     opts.dataset = None
     opts.small = False
     opts.mixed_precision = False
@@ -37,9 +37,6 @@ def Get_RAFT():
 
 
 def check_flow_occlusion(flow_f, flow_b):
-    """
-    Compute occlusion map through forward/backward flow consistency check
-    """
     def get_occlusion(flow1, flow2):
         grid_flow = grid + flow1
         grid_flow[0, :, :] = 2.0 * grid_flow[0, :, :] / max(W - 1, 1) - 1.0
@@ -68,19 +65,11 @@ def check_flow_occlusion(flow_f, flow_b):
 
 
 if __name__=='__main__':
-
-    # spynet=SpyNet(load_path='/home/wanziyu/workspace/project/BasicSR/pretrained_models/network-sintel-final.pytorch')
-    # spynet=spynet.cuda()
-    #### First we read a video clip
     spynet = Get_RAFT()
     spynet.cuda()
-
     net_params = sum(map(lambda x: x.numel(), spynet.parameters()))
-    
     print("RAFT Parameter #: %d"%(net_params))
 
-    # url = '/home/wanziyu/workspace/datasets/Old_Film/video_clips/Around_the_world_in_1896/0001'
-    # url='/home/wanziyu/workspace/project/Video_Restoration/VP_code/models/test_flow/clip_1'
     url = '/home/wanziyu/workspace/project/VSR/basicsr/data/Data_Degradation/Validation_Set/input/001'
 
     save_url='/home/wanziyu/workspace/project/Video_Restoration/VP_code/models/test_flow/001/warped_1'
