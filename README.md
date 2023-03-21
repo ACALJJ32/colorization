@@ -42,6 +42,7 @@ The restored results could be found in ```./output_dir``` folder.
 ### Test results
 ```
 # FID and CDC results on Baidu Disk
+https://pan.baidu.com/s/1lk0kt-iEmYBmWYGo_ER4Ig
 
-code: 
+code: 5pyv
 ```
